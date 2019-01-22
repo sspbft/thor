@@ -5,7 +5,7 @@ class Response:
 
   def __init__(self, code=200, data={}):
     self.code = code
-    self.data = data
+    self.data = data 
 
   def as_json(self):
     return jsonify({
