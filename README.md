@@ -1,5 +1,5 @@
 # thor
-Service that manages an application service running on the same node.
+Service that manages a PracticalBFT application running locally on the same node.
 
 ## Set up
 First, make sure that you have [Python 3.5](https://www.python.org/downloads/), [pip3.5](https://pip.pypa.io/en/stable/installing/) and [virtualenv](https://pypi.org/project/virtualenv/) installed. Then, follow the commands below.
@@ -17,3 +17,5 @@ curl https://bootstrap.pypa.io/get-pip.py | python3
 ```
 
 Now you can simple run `FLASK_APP=api/api.py flask run` and the server can be found on [localhost:5000](http://localhost:5000)!
+
+The code base is linted using [pep8](https://pypi.org/project/pep8/), so make sure to lint the code using this tool before pushing any code.
