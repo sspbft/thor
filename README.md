@@ -1,4 +1,6 @@
-# thor
+# Thor
+[![Build status](https://travis-ci.org/practicalbft/thor.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+
 Service that manages a PracticalBFT application running locally on the same node.
 
 ## Set up
@@ -7,7 +9,7 @@ First, make sure that you have [Python 3.5](https://www.python.org/downloads/), 
 ```
 git clone https://github.com/practicalbft/thor.git && cd thor
 virtualenv --python=$(which python3.5) ./env && source ./env/bin/activate
-pip3.5 install -r reqs.txt
+pip3.5 install -r requirements.txt
 ```
 
 Note, if you're having problems with pip, one (or both) of the following commands might help.
