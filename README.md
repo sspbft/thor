@@ -14,3 +14,5 @@ Note, if you're having problems with pip, one (or both) of the following command
 pip install --upgrade pip
 curl https://bootstrap.pypa.io/get-pip.py | python3
 ```
+
+Simply run `FLASK_APP=api/api.py flask run` and the server can be found on [localhost:5000](http://localhost:5000)!
