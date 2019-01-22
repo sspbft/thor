@@ -1,4 +1,6 @@
-# thor
+# Thor
+[![Build status](https://travis-ci.org/practicalbft/thor.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+
 Service that manages a PracticalBFT application running locally on the same node.
 
 ## Set up
