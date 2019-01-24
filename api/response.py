@@ -2,7 +2,7 @@ from flask import jsonify
 
 
 class Response:
-    """Models an HTTP response"""
+    """Models an HTTP response."""
 
     def __init__(self, code=200, data={}):
         self.code = code
