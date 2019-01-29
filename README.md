@@ -18,15 +18,13 @@ pip install --upgrade pip
 curl https://bootstrap.pypa.io/get-pip.py | python3
 ```
 
-Now you can simple run `FLASK_APP=api/api.py flask run` and the server can be found on [localhost:5000](http://localhost:5000)!
-
 The code base is linted using [pep8](https://pypi.org/project/pep8/), so make sure to lint the code using this tool before pushing any code.
 
 ## Usage
 Thor is used as a CLI with a set of arguments that can be seen below.
 
 ```
-usage: thor.py [-h] [-n NODES] [-f FAULTY] [-p PATH] [-e ENTRYPOINT] mode
+usage: thor.py [-h] [-n NODES] [-f FAULTY] [-p PATH] [-e ENTRYPOINT] [-m] mode
 
 positional arguments:
   mode                  either [local] or [planetlab]
@@ -40,6 +38,7 @@ optional arguments:
   -p PATH, --path PATH  absolute path to app to run
   -e ENTRYPOINT, --entrypoint ENTRYPOINT
                         start script for app
+  -m, --metrics         start heimdall metrics
 ```
 
 Example launch of a local environment with specified number of nodes and faulty nodes:

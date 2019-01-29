@@ -1,9 +1,10 @@
-"""Thor CLI.
+"""
+Thor CLI.
 
-CLI that sets up a PracticalBFT application according.
+CLI that bootstraps a PracticalBFT application according to configuration found
+in conf/custom|default.ini and command line arguments.
 """
 
-import sys
 import argparse
 from local.bootstrap import bootstrap as local_bootstrap
 from helpers.enums import Mode
@@ -29,6 +30,8 @@ def setup_argparse():
                         type=int)
     parser.add_argument("-p", "--path", help="absolute path to app to run")
     parser.add_argument("-e", "--entrypoint", help="start script for app")
+    parser.add_argument("-m", "--metrics", help="start heimdall metrics",
+                        action='store_true')
     args = parser.parse_args()
 
     if args.nodes is not None:
@@ -47,6 +50,6 @@ if __name__ == "__main__":
     args = setup_argparse()
 
     if args.mode == Mode.local:
-        local_bootstrap()
+        local_bootstrap(args.metrics)
     else:
         raise NotImplementedError

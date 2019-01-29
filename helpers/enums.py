@@ -10,4 +10,5 @@ class Mode(Enum):
 
     @classmethod
     def exists(cls, value):
+        """Helper method used to check if an enum value exists."""
         return any(value == item.value for item in cls)

@@ -8,7 +8,7 @@ def write_file(path, contents, mode="w"):
         f.write(contents)
 
 
-def file_exists(path):
+def exists(path):
     """Checks if a file is present at the given path."""
     return os.path.exists(path)
 
