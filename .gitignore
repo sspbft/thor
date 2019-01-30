@@ -5,3 +5,6 @@ lib
 include
 .Python
 .vscode
+kill.sh
+logs
+custom.ini

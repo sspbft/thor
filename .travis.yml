@@ -2,4 +2,7 @@ language: python
 python:
   - "3.5"
 script:
-  - pep8 --exclude="./env" .
+  - flake8
+branches:
+  only:
+    - master
