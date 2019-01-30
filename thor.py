@@ -9,6 +9,12 @@ import argparse
 from local.bootstrap import bootstrap as local_bootstrap
 from helpers.enums import Mode
 from conf import config
+import helpers.ps as ps
+import helpers.io as io
+import signal
+import threading
+import logging
+import sys
 
 
 def check_mode(mode):
@@ -46,10 +52,31 @@ def setup_argparse():
     return args
 
 
+def on_sig_term(signal, frame):
+    """Kills subprocess and terminates Thor on CTRL + C."""
+    ps.kill_all_subprocesses()
+    sys.exit(0)
+
+
+def setup_logging():
+    """Configures the logging for Thor."""
+    log_folder_path = config.get_log_path()
+    io.create_folder(log_folder_path)
+    log_file_path = "{}/thor.log".format(log_folder_path)
+    io.create_file(log_file_path)
+    logging.basicConfig(filename=log_file_path,
+                        level=logging.INFO)
+
+
 if __name__ == "__main__":
     args = setup_argparse()
+    setup_logging()
 
     if args.mode == Mode.local:
         local_bootstrap(args.metrics)
+        print("All processes launched in background... (CTRL+C to kill)")
+        signal.signal(signal.SIGINT, on_sig_term)
+        forever = threading.Event()
+        forever.wait()
     else:
         raise NotImplementedError

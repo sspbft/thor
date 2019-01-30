@@ -5,6 +5,8 @@ from shutil import which
 import subprocess
 import os
 import json
+import logging
+import helpers.ps as ps
 
 HOST = "localhost"
 IP_ADDR = "127.0.0.1"
@@ -56,12 +58,12 @@ def start_heimdall():
         raise EnvironmentError("Can't find installation of docker-compose.")
 
     path = config.get_heimdall_root()
-    print(path)
     if io.exists(path):
         with open("logs/heimdall.log", "w") as f:
-            subprocess.Popen("{} down && {} up".format(dc, dc), shell=True,
-                             cwd=path, stdout=f, stderr=f)
-            print("Starting Heimdall..")
+            p = subprocess.Popen("{} down && {} up".format(dc, dc), shell=True,
+                                 cwd=path, stdout=f, stderr=f)
+            ps.add_subprocess_pid(p.pid)
+            logging.info("Starting Heimdall with PID {}".format(p.pid))
     else:
         raise ValueError("Heimdall root {} does not exists".format(path))
 
@@ -81,8 +83,10 @@ def bootstrap(start_metrics):
         env["ID"] = str(i)
         env["API_PORT"] = str(4000 + i)
         io.create_folder("logs")
-        print("Starting app on node {}".format(i))
-        with open("logs/node{i}.log".format(i=i), "w") as f:
-            subprocess.Popen(cmd, shell=True, cwd=cwd, stdin=f, stderr=f,
-                             env=env)
+        logging.info("Starting app on node {}".format(i))
+        log_path = config.get_log_path()
+        with open("{}/node{}.log".format(log_path, i), "w") as f:
+            p = subprocess.Popen(cmd, shell=True, cwd=cwd, stdin=f, stderr=f,
+                                 env=env)
+            ps.add_subprocess_pid(p.pid)
     return

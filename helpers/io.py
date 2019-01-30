@@ -14,6 +14,11 @@ def exists(path):
 
 
 def create_folder(path):
-    """Creates a folder at a pathif it does not exist."""
-    if not os.path.exists(path):
+    """Creates a folder at a path if it does not exist."""
+    if not exists(path):
         os.makedirs(path)
+
+
+def create_file(path):
+    """Creates a file at a path and overwrites file if exists."""
+    open(path, "w").close()
