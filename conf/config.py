@@ -57,6 +57,11 @@ def set_byzantine_count(f):
     config.set("system", "f", str(f))
 
 
+def get_log_path():
+    """Returns the absolute path to the logs directory for Thor."""
+    return config.get("etc", "log_path")
+
+
 def get_heimdall_sd_path():
     """Sets the absolute path to the Heimdall sd.json file."""
     return config.get("etc", "heimdall_sd_path")
