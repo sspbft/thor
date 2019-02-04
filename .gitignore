@@ -8,3 +8,5 @@ include
 kill.sh
 logs
 custom.ini
+.DS_Store
+env

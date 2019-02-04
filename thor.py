@@ -14,6 +14,7 @@ import helpers.io as io
 import signal
 import threading
 import logging
+import subprocess
 import sys
 
 
@@ -30,6 +31,8 @@ def setup_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", help="either [local] or [planetlab]",
                         type=check_mode)
+    parser.add_argument("-d", "--debug", help="all output to current shell",
+                        action="store_true")
     parser.add_argument("-n", "--nodes", help="total number of nodes",
                         type=int)
     parser.add_argument("-f", "--faulty", help="number of byzantine nodes",
@@ -37,7 +40,7 @@ def setup_argparse():
     parser.add_argument("-p", "--path", help="absolute path to app to run")
     parser.add_argument("-e", "--entrypoint", help="start script for app")
     parser.add_argument("-m", "--metrics", help="start heimdall metrics",
-                        action='store_true')
+                        action="store_true")
     args = parser.parse_args()
 
     if args.nodes is not None:
@@ -55,6 +58,10 @@ def setup_argparse():
 def on_sig_term(signal, frame):
     """Kills subprocess and terminates Thor on CTRL + C."""
     ps.kill_all_subprocesses()
+    # run docker-compose down in heimdall directory to kil heimdall as well
+    path = config.get_heimdall_root()
+    p = subprocess.Popen("docker-compose down", shell=True, cwd=path)
+    p.wait()
     sys.exit(0)
 
 
@@ -64,16 +71,17 @@ def setup_logging():
     io.create_folder(log_folder_path)
     log_file_path = "{}/thor.log".format(log_folder_path)
     io.create_file(log_file_path)
-    logging.basicConfig(filename=log_file_path,
+    logging.basicConfig(filename=log_file_path, filemode="w",
                         level=logging.INFO)
 
 
 if __name__ == "__main__":
     args = setup_argparse()
-    setup_logging()
+    if not args.debug:
+        setup_logging()
 
     if args.mode == Mode.local:
-        local_bootstrap(args.metrics)
+        local_bootstrap(args)
         print("All processes launched in background... (CTRL+C to kill)")
         signal.signal(signal.SIGINT, on_sig_term)
         forever = threading.Event()

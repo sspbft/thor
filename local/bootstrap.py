@@ -46,7 +46,7 @@ def create_nodes_file():
     io.write_file(path=path, contents=contents)
 
 
-def start_heimdall():
+def start_heimdall(debug=False):
     """
     Starts the Heimdall service.
 
@@ -59,21 +59,25 @@ def start_heimdall():
 
     path = config.get_heimdall_root()
     if io.exists(path):
-        with open("logs/heimdall.log", "w") as f:
+        if debug:
             p = subprocess.Popen("{} down && {} up".format(dc, dc), shell=True,
-                                 cwd=path, stdout=f, stderr=f)
-            ps.add_subprocess_pid(p.pid)
-            logging.info("Starting Heimdall with PID {}".format(p.pid))
+                                 cwd=path)
+        else:
+            with open("logs/heimdall.log", "w") as f:
+                p = subprocess.Popen("{} down && {} up".format(dc, dc),
+                                     shell=True, cwd=path, stdout=f, stderr=f)
+        ps.add_subprocess_pid(p.pid)
+        logging.info("Starting Heimdall with PID {}".format(p.pid))
     else:
         raise ValueError("Heimdall root {} does not exists".format(path))
 
 
-def bootstrap(start_metrics):
+def bootstrap(args):
     """Launches a local environment according to specs in default.ini."""
     create_nodes_file()
     generate_heimdall_sd()
-    if start_metrics:
-        start_heimdall()
+    if args.metrics:
+        start_heimdall(args.debug)
 
     cmd = config.get_entrypoint()
     cwd = config.get_app_path()
@@ -82,11 +86,18 @@ def bootstrap(start_metrics):
     for i in range(0, config.get_node_count()):
         env["ID"] = str(i)
         env["API_PORT"] = str(4000 + i)
+        env["NUMBER_OF_NODES"] = str(config.get_node_count())
+        env["NUMBER_OF_BYZANTINE"] = str(config.get_byzantine_count())
         io.create_folder("logs")
         logging.info("Starting app on node {}".format(i))
         log_path = config.get_log_path()
-        with open("{}/node{}.log".format(log_path, i), "w") as f:
-            p = subprocess.Popen(cmd, shell=True, cwd=cwd, stdin=f, stderr=f,
-                                 env=env)
-            ps.add_subprocess_pid(p.pid)
+
+        if not args.debug:
+            with open("{}/node{}.log".format(log_path, i), "w") as f:
+                p = subprocess.Popen(cmd, shell=True, cwd=cwd,
+                                     stdin=f, stderr=f, env=env)
+        else:
+            p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
+        ps.add_subprocess_pid(p.pid)
+
     return
