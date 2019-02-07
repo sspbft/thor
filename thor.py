@@ -71,10 +71,9 @@ def on_sig_term(signal, frame):
 
 def setup_logging():
     """Configures the logging for Thor."""
-    FORMAT = "\033[1mThor ==> %(asctime)-15s : [%(levelname)s] : " + \
+    FORMAT = "\033[1mThor.%(name)s ==> [%(levelname)s] : " + \
              "%(message)s\033[0m"
     logging.basicConfig(format=FORMAT, level=logging.INFO)
-    logger.info("foo bar baz")
 
 
 if __name__ == "__main__":

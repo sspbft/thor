@@ -10,6 +10,7 @@ import helpers.ps as ps
 
 HOST = "localhost"
 IP_ADDR = "127.0.0.1"
+logger = logging.getLogger(__name__)
 
 
 def generate_heimdall_sd():
@@ -89,16 +90,19 @@ def bootstrap(args):
         env["NUMBER_OF_NODES"] = str(config.get_node_count())
         env["NUMBER_OF_BYZANTINE"] = str(config.get_byzantine_count())
         env["WERKZEUG_RUN_MAIN"] = "true"  # no Flask output
-        io.create_folder("logs")
-        logging.info("Starting app on node {}".format(i))
-        log_path = config.get_log_path()
+        if args.debug:
+            env["DEBUG"] = "true"
 
-        if not args.debug:
-            with open("{}/node{}.log".format(log_path, i), "w") as f:
-                p = subprocess.Popen(cmd, shell=True, cwd=cwd,
-                                     stdin=f, stderr=f, env=env)
-        else:
-            p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
+        # stashing this since this enables writing subprocess logs to files
+        # io.create_folder("logs")
+        # log_path = config.get_log_path()
+        # if not args.debug:
+        #     with open("{}/node{}.log".format(log_path, i), "w") as f:
+        #         p = subprocess.Popen(cmd, shell=True, cwd=cwd,
+        #                              stdin=f, stderr=f, env=env)
+        # else:
+        logger.info("Starting app on node {}".format(i))
+        p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
         ps.add_subprocess_pid(p.pid)
 
     return

@@ -3,6 +3,7 @@ import psutil
 import logging
 
 pids = []
+logger = logging.getLogger(__name__)
 
 
 def kill(pid):
@@ -16,9 +17,9 @@ def kill(pid):
 def kill_all_subprocesses():
     """Kills all running subprocesses and terminates program if exit = True."""
     for pid in pids:
-        logging.info("Killing subprocess with pid {}".format(pid))
+        logger.info("Killing subprocess with pid {}".format(pid))
         kill(pid)
-    logging.info("Killed all subprocesses")
+    logger.info("Killed all subprocesses")
 
 
 def add_subprocess_pid(pid):
