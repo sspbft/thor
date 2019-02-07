@@ -41,4 +41,4 @@ Example launch of a local environment with specified number of nodes and faulty 
 python3.7 thor.py -n 5 -f 1 local
 ```
 
-Make sure to edit `conf/default.ini` to contain the appropriate values or supply them as options through the CLI. 
+Make sure to edit `conf/default.ini` or add a `conf/custom.ini` with the appropriate values or supply the approriate ones through the CLI. 

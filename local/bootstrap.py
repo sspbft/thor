@@ -88,6 +88,7 @@ def bootstrap(args):
         env["API_PORT"] = str(4000 + i)
         env["NUMBER_OF_NODES"] = str(config.get_node_count())
         env["NUMBER_OF_BYZANTINE"] = str(config.get_byzantine_count())
+        env["WERKZEUG_RUN_MAIN"] = "true"  # no Flask output
         io.create_folder("logs")
         logging.info("Starting app on node {}".format(i))
         log_path = config.get_log_path()

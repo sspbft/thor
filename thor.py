@@ -5,17 +5,21 @@ CLI that bootstraps a PracticalBFT application according to configuration found
 in conf/custom|default.ini and command line arguments.
 """
 
+# standard
 import argparse
-from local.bootstrap import bootstrap as local_bootstrap
-from helpers.enums import Mode
-from conf import config
-import helpers.ps as ps
-import helpers.io as io
 import signal
 import threading
 import logging
 import subprocess
 import sys
+
+# local
+from local.bootstrap import bootstrap as local_bootstrap
+from helpers.enums import Mode
+from conf import config
+import helpers.ps as ps
+
+logger = logging.getLogger(__name__)
 
 
 def check_mode(mode):
@@ -67,22 +71,19 @@ def on_sig_term(signal, frame):
 
 def setup_logging():
     """Configures the logging for Thor."""
-    log_folder_path = config.get_log_path()
-    io.create_folder(log_folder_path)
-    log_file_path = "{}/thor.log".format(log_folder_path)
-    io.create_file(log_file_path)
-    logging.basicConfig(filename=log_file_path, filemode="w",
-                        level=logging.INFO)
+    FORMAT = "\033[1mThor ==> %(asctime)-15s : [%(levelname)s] : " + \
+             "%(message)s\033[0m"
+    logging.basicConfig(format=FORMAT, level=logging.INFO)
+    logger.info("foo bar baz")
 
 
 if __name__ == "__main__":
     args = setup_argparse()
-    if not args.debug:
-        setup_logging()
+    setup_logging()
 
     if args.mode == Mode.local:
         local_bootstrap(args)
-        print("All processes launched in background... (CTRL+C to kill)")
+        logger.info("All processes launched in background... (CTRL+C to kill)")
         signal.signal(signal.SIGINT, on_sig_term)
         forever = threading.Event()
         forever.wait()
