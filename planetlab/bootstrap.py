@@ -10,11 +10,6 @@ logger = logging.getLogger(__name__)
 
 def bootstrap(args):
     """Launches an app instance on a PlanetLab node."""
-    # TODO look into metrics later
-    # generate_heimdall_sd()
-    # if args.metrics:
-    #     start_heimdall(args.debug)
-
     cmd = config.get_entrypoint()
     cwd = config.get_app_path()
     env = os.environ.copy()
@@ -33,7 +28,11 @@ def bootstrap(args):
         env["DEBUG"] = "true"
 
     logger.info(f"Starting app on node {node_id}")
-    p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
+    if args.logpath:
+        with open("PATH", "w") as f:
+            p = subprocess.Popen(cmd, shell=True, cwd=cwd,
+                                 stdin=f, stderr=f, env=env)
+    else:
+        p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
     ps.add_subprocess_pid(p.pid)
-
     return
