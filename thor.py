@@ -15,6 +15,7 @@ import sys
 
 # local
 from local.bootstrap import bootstrap as local_bootstrap
+from planetlab.bootstrap import bootstrap as planetlab_bootstrap
 from helpers.enums import Mode
 from conf import config
 import helpers.ps as ps
@@ -45,6 +46,7 @@ def setup_argparse():
     parser.add_argument("-e", "--entrypoint", help="start script for app")
     parser.add_argument("-m", "--metrics", help="start heimdall metrics",
                         action="store_true")
+    parser.add_argument("-i", "--id", help="id of the current node", type=int)
     args = parser.parse_args()
 
     if args.nodes is not None:
@@ -64,8 +66,11 @@ def on_sig_term(signal, frame):
     ps.kill_all_subprocesses()
     # run docker-compose down in heimdall directory to kil heimdall as well
     path = config.get_heimdall_root()
-    p = subprocess.Popen("docker-compose down", shell=True, cwd=path)
-    p.wait()
+    try:
+        p = subprocess.Popen("docker-compose down", shell=True, cwd=path)
+        p.wait()
+    except FileNotFoundError:
+        logger.info(f"Invalid Heimdall path {path} configured")
     sys.exit(0)
 
 
@@ -83,8 +88,11 @@ if __name__ == "__main__":
     if args.mode == Mode.local:
         local_bootstrap(args)
         logger.info("All processes launched in background... (CTRL+C to kill)")
-        signal.signal(signal.SIGINT, on_sig_term)
-        forever = threading.Event()
-        forever.wait()
+    elif args.mode == Mode.planetlab:
+        planetlab_bootstrap(args)
+        logger.info("Running process in background... (CTRL+C to kill)")
     else:
         raise NotImplementedError
+    signal.signal(signal.SIGINT, on_sig_term)
+    forever = threading.Event()
+    forever.wait()
