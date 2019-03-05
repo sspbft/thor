@@ -26,6 +26,8 @@ def bootstrap(args):
     env["NUMBER_OF_CLIENTS"] = "1"
     if args.debug:
         env["DEBUG"] = "true"
+    if args.runsleep:
+        env["RUN_SLEEP"] = args.runsleep
 
     logger.info(f"Starting app on node {node_id}")
     if args.logpath:

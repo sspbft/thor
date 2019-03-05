@@ -93,6 +93,8 @@ def bootstrap(args):
         env["NUMBER_OF_CLIENTS"] = "1"
         if args.debug:
             env["DEBUG"] = "true"
+        if args.runsleep:
+            env["RUN_SLEEP"] = args.runsleep
 
         # stashing this since this enables writing subprocess logs to files
         # io.create_folder("logs")
