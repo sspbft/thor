@@ -29,9 +29,9 @@ def bootstrap(args):
 
     logger.info(f"Starting app on node {node_id}")
     if args.logpath:
-        with open("PATH", "w") as f:
+        with open(args.logpath, "w") as f:
             p = subprocess.Popen(cmd, shell=True, cwd=cwd,
-                                 stdin=f, stderr=f, env=env)
+                                 stdout=f, stderr=f, env=env)
     else:
         p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
     ps.add_subprocess_pid(p.pid)

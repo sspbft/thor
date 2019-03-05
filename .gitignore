@@ -10,3 +10,4 @@ logs
 custom.ini
 .DS_Store
 env
+hosts.txt
