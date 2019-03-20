@@ -28,6 +28,8 @@ def bootstrap(args):
         env["DEBUG"] = "true"
     if args.runsleep:
         env["RUN_SLEEP"] = args.runsleep
+    if args.non_selfstab:
+        env["NON_SELF_STAB"] = "1"
 
     logger.info(f"Starting app on node {node_id}")
     if args.logpath:

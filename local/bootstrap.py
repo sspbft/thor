@@ -95,15 +95,9 @@ def bootstrap(args):
             env["DEBUG"] = "true"
         if args.runsleep:
             env["RUN_SLEEP"] = args.runsleep
+        if args.non_selfstab:
+            env["NON_SELF_STAB"] = "1"
 
-        # stashing this since this enables writing subprocess logs to files
-        # io.create_folder("logs")
-        # log_path = config.get_log_path()
-        # if not args.debug:
-        #     with open("{}/node{}.log".format(log_path, i), "w") as f:
-        #         p = subprocess.Popen(cmd, shell=True, cwd=cwd,
-        #                              stdin=f, stderr=f, env=env)
-        # else:
         logger.info("Starting app on node {}".format(i))
         p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
         ps.add_subprocess_pid(p.pid)

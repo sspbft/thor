@@ -49,6 +49,9 @@ def setup_argparse():
     parser.add_argument("-i", "--id", help="id of the current node", type=int)
     parser.add_argument("-lp", "--logpath", help="where to write app log")
     parser.add_argument("-rs", "--runsleep", help="s to sleep in module.run")
+    parser.add_argument("-nss", "--non-selfstab",
+                        help="run BFTList without self-stabilization",
+                        action="store_true")
     args = parser.parse_args()
 
     if args.nodes is not None:

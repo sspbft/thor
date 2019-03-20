@@ -8,6 +8,7 @@ First, make sure that you have [Python 3.7](https://www.python.org/downloads/) i
 
 ```
 git clone https://github.com/practicalbft/thor.git && cd thor
+chmod +x scripts/*.sh
 python3.7 -m venv env
 pip install --upgrade pip
 pip install -r requirements.txt
