@@ -30,6 +30,8 @@ def bootstrap(args):
         env["RUN_SLEEP"] = args.runsleep
     if args.non_selfstab:
         env["NON_SELF_STAB"] = "1"
+    if args.start_state:
+        env["INJECT_START_STATE"] = "1"
 
     logger.info(f"Starting app on node {node_id}")
     if args.logpath:

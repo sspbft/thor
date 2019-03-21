@@ -52,6 +52,9 @@ def setup_argparse():
     parser.add_argument("-nss", "--non-selfstab",
                         help="run BFTList without self-stabilization",
                         action="store_true")
+    parser.add_argument("-ss", "--start-state", help="tell BFTList that it " +
+                        "should load start_state.json in conf/",
+                        action="store_true")
     args = parser.parse_args()
 
     if args.nodes is not None:

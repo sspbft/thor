@@ -97,6 +97,8 @@ def bootstrap(args):
             env["RUN_SLEEP"] = args.runsleep
         if args.non_selfstab:
             env["NON_SELF_STAB"] = "1"
+        if args.start_state:
+            env["INJECT_START_STATE"] = "1"
 
         logger.info("Starting app on node {}".format(i))
         p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
