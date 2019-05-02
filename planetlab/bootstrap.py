@@ -22,7 +22,7 @@ def bootstrap(args):
         env["NUMBER_OF_NODES"] = str(config.get_node_count())
         env["NUMBER_OF_BYZANTINE"] = str(config.get_byzantine_count())
         env["WERKZEUG_RUN_MAIN"] = "true"  # no Flask output
-        env["NUMBER_OF_CLIENTS"] = "1"
+        env["NUMBER_OF_CLIENTS"] = "6"
         if args.debug:
             env["DEBUG"] = "true"
         if args.runsleep:
