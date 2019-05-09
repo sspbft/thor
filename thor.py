@@ -57,6 +57,8 @@ def setup_argparse():
                         action="store_true")
     parser.add_argument("-s", "--scale", help="scale instances on this node",
                         type=int, default=1)
+    parser.add_argument("-c", "--clients", help="number of clients",
+                        type=int)
     args = parser.parse_args()
 
     if args.nodes is not None:
