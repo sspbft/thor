@@ -90,7 +90,11 @@ def bootstrap(args):
         env["NUMBER_OF_NODES"] = str(config.get_node_count())
         env["NUMBER_OF_BYZANTINE"] = str(config.get_byzantine_count())
         env["WERKZEUG_RUN_MAIN"] = "true"  # no Flask output
+<<<<<<< Updated upstream
         env["NUMBER_OF_CLIENTS"] = args.clients
+=======
+        env["NUMBER_OF_CLIENTS"] = "6"
+>>>>>>> Stashed changes
         if args.debug:
             env["DEBUG"] = "true"
         if args.runsleep:
@@ -99,6 +103,8 @@ def bootstrap(args):
             env["NON_SELF_STAB"] = "1"
         if args.start_state:
             env["INJECT_START_STATE"] = "1"
+        if args.profiling:
+            env["PROFILING"] = "1"
 
         logger.info("Starting app on node {}".format(i))
         p = subprocess.Popen(cmd, shell=True, cwd=cwd, env=env)
