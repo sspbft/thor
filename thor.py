@@ -94,6 +94,8 @@ def setup_logging():
 
 if __name__ == "__main__":
     args = setup_argparse()
+    if args.clients is None:
+        raise ValueError("Argument clients -c must be present.")
     setup_logging()
 
     if args.mode == Mode.local:
