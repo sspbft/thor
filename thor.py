@@ -1,7 +1,7 @@
 """
 Thor CLI.
 
-CLI that bootstraps a PracticalBFT application according to configuration found
+CLI that bootstraps a SSPBFT application according to configuration found
 in conf/custom|default.ini and command line arguments.
 """
 

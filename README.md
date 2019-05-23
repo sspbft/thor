@@ -1,7 +1,7 @@
 # Thor
 [![Build status](https://travis-ci.org/sspbft/thor.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 
-Service that manages a PracticalBFT application running locally on the same node.
+Service that manages a SSPBFT application running locally on the same node.
 
 ## Set up
 First, make sure that you have [Python 3.7](https://www.python.org/downloads/) installed. Then, follow the commands below.
