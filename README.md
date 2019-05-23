@@ -1,5 +1,5 @@
 # Thor
-[![Build status](https://travis-ci.org/practicalbft/thor.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
+[![Build status](https://travis-ci.org/sspbft/thor.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
 
 Service that manages a PracticalBFT application running locally on the same node.
 
@@ -7,7 +7,7 @@ Service that manages a PracticalBFT application running locally on the same node
 First, make sure that you have [Python 3.7](https://www.python.org/downloads/) installed. Then, follow the commands below.
 
 ```
-git clone https://github.com/practicalbft/thor.git && cd thor
+git clone https://github.com/sspbft/thor.git && cd thor
 chmod +x scripts/*.sh
 python3.7 -m venv env
 pip install --upgrade pip
