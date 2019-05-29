@@ -62,11 +62,6 @@ def get_log_path():
     return config.get("etc", "log_path")
 
 
-def get_heimdall_sd_path():
-    """Sets the absolute path to the Heimdall sd.json file."""
-    return config.get("etc", "heimdall_sd_path")
-
-
 def get_heimdall_root():
     """Returns the absolute path to the Heimdall project root."""
     return config.get("etc", "heimdall_root")

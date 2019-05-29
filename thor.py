@@ -78,7 +78,8 @@ def setup_argparse():
 def on_sig_term(signal, frame):
     """Kills subprocess and terminates Thor on CTRL + C."""
     ps.kill_all_subprocesses()
-    # run docker-compose down in heimdall directory to kil heimdall as well
+
+    # run docker-compose down in heimdall directory to kill heimdall as well
     path = config.get_heimdall_root()
     try:
         p = subprocess.Popen("docker-compose down", shell=True, cwd=path)

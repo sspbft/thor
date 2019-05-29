@@ -18,7 +18,7 @@ def generate_heimdall_sd():
     Generates the service discovery file used by the Prometheus container
     in Heimdall.
     """
-    path = config.get_heimdall_sd_path()
+    path = f"{config.get_heimdall_root()}/prometheus/sd.json"
     sd = {"targets": [], "labels": {"mode": "local", "job": "bft-list"}}
 
     # add all instances on Docker host to targets (only in local mode)

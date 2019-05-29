@@ -8,8 +8,8 @@ First, make sure that you have [Python 3.7](https://www.python.org/downloads/) i
 
 ```
 git clone https://github.com/sspbft/thor.git && cd thor
-chmod +x scripts/*.sh
 python3.7 -m venv env
+source env/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
@@ -42,4 +42,4 @@ Example launch of a local environment with specified number of nodes and faulty 
 python3.7 thor.py -n 5 -f 1 local
 ```
 
-Make sure to edit `conf/default.ini` or add a `conf/custom.ini` with the appropriate values or supply the approriate ones through the CLI. 
+Make sure to edit `conf/default.ini` and add appropriate values.
