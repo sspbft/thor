@@ -57,7 +57,8 @@ def setup_argparse():
                         action="store_true")
     parser.add_argument("-s", "--scale", help="scale instances on this node",
                         type=int, default=1)
-    parser.add_argument("-c", "--clients", help="number of clients")
+    parser.add_argument("-c", "--clients", help="number of clients",
+                        type=int, default=6)
     parser.add_argument("-pf", "--profiling",
                         help="run BFTList with profiling",
                         action="store_true")
@@ -98,8 +99,6 @@ def setup_logging():
 
 if __name__ == "__main__":
     args = setup_argparse()
-    if args.clients is None:
-        raise ValueError("Argument clients -c must be present.")
     setup_logging()
 
     if args.mode == Mode.local:
