@@ -50,9 +50,9 @@ def setup_argparse():
     parser.add_argument("-lp", "--logpath", help="where to write app log")
     parser.add_argument("-rs", "--runsleep", help="s to sleep in module.run")
     parser.add_argument("-nss", "--non-selfstab",
-                        help="run BFTList without self-stabilization",
+                        help="run without self-stabilization",
                         action="store_true")
-    parser.add_argument("-ss", "--start-state", help="tell BFTList that it " +
+    parser.add_argument("-ss", "--start-state", help="tell app that it " +
                         "should load start_state.json in conf/",
                         action="store_true")
     parser.add_argument("-s", "--scale", help="scale instances on this node",
@@ -60,7 +60,7 @@ def setup_argparse():
     parser.add_argument("-c", "--clients", help="number of clients",
                         type=int, default=6)
     parser.add_argument("-pf", "--profiling",
-                        help="run BFTList with profiling",
+                        help="run app with profiling",
                         action="store_true")
     args = parser.parse_args()
 
